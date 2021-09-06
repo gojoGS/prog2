@@ -3,7 +3,8 @@ title: Java alapok
 ...
 
 
-## Entry point
+
+# Entry point
 
 ```java
 class ProgramName {
@@ -19,13 +20,15 @@ class ProgramName {
 
 ---
 
-## Referenciák
+# Referenciák
 
 > Minden referncia, kivéve ami nem
 
 - Oogway
 
-## Referencia típusok
+---
+
+# Referencia típusok
 
 ```java
 class DbConnection {
@@ -57,7 +60,10 @@ class Main {
 
 A változók referenciák, nem értékek.
 
-## Értéktípusok
+---
+
+
+# Értéktípusok
 
 ```java
 class Main {
@@ -77,7 +83,9 @@ class Main {
 
 Kivéve a primitív típusok, mivel ezek pont hogy értékek.
 
-## Egyenlőség
+---
+
+# Egyenlőség
 
 So far, So good,... So what!?
 
@@ -111,7 +119,9 @@ class Main {
 - az `==` operátor referencia-egyenlőséget vizsgál
 - a `.equals()` metódus érték-egyenlőséget (vagy ahogy implementálva van)
 
-## Bonus 
+---
+
+# Bonus 
 
 ```java
 import java.util.ArrayList;
@@ -156,3 +166,371 @@ class Main {
     System.out.printf("lst2: %s\n", lst2);
 ```
 
+---
+
+## for
+
+```java
+class Main {
+    public static void main(String[] args) {
+        for(int i = 0; i < 1; ++i) {
+            System.out.println("Ugyanat mint C++-ban");
+        }
+    }
+}
+```
+
+---
+
+## while
+
+```java
+class Main {
+    public static void main(String[] args) {
+        while(true) {
+            System.out.println("Ugyanat mint C++-ban");
+        }
+    }
+}
+```
+
+---
+
+## foreach
+
+```java
+import java.util.List;
+
+class Main {
+    public static void main(String[] args) {
+        var poem = List.of(
+                "Bőre illata paprika",
+                "Népi naíva",
+                "Azt mondta a neve Marika"
+        );
+
+        for (var line : poem) {
+            System.out.println(line);
+        }
+    }
+}
+```
+
+---
+
+## class
+
+
+---
+
+## abstract class
+
+```java
+public abstract class Entity {
+    private int maxHealth;
+    private int health;
+    private int level;
+
+    protected Entity(int maxHealth, int level) {
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
+        this.level = level;
+    }
+
+    void draw() {
+        System.out.println("Graphics black magic");
+    }
+}
+```
+
+---
+
+```java
+abstract class Npc extends Entity {
+    private static double strengthModifierBecauseItsEasierThanAi = 1.0;
+
+    public static void setDifficultyModifier(double modifier) {
+        strengthModifierBecauseItsEasierThanAi = modifier;
+    }
+
+    protected Npc(int maxHealth, int level) {
+        super(maxHealth, level);
+    }
+
+    abstract void move();
+}
+```
+. . . 
+
+```java
+class WhiteTowerWatchman extends Npc {
+    WhiteTowerWatchman() {
+        super(950, 15);
+    }
+
+    void move() {
+        System.out.println("Help the player");
+    }
+}
+```
+
+```java
+class Orc extends Npc {
+    Orc() {
+        super(50, 10);
+    }
+
+    void move() {
+        System.out.println("Destroy the MTV Székház");
+    }
+}
+```
+
+---
+
+```java
+class Player extends Entity {
+    int experience;
+
+    protected Player() {
+        super(9999, 1);
+        this.experience = 0;
+    }
+
+    @Override
+    void draw() {
+        System.out.println("Graphics black magic: dont render model, use static image");
+    }
+}
+```
+
+---
+
+```java
+// main.java
+
+class Main {
+    public static void main(String[] args) {
+        List<Entity> lst = List.of(
+                new Orc(),
+                new Orc(),
+                new WhiteTowerWatchman(),
+                new Orc(),
+                new WhiteTowerWatchman(),
+                new Player()
+        );
+
+        for (var entity : lst) {
+            entity.draw();
+
+            if (!(entity instanceof Player)) {
+                ((Npc) entity).move();
+            }
+        }
+    }
+}
+```
+
+---
+
+## interface
+
+. . .
+
+```java
+interface Statement {
+    // dolgok
+}
+
+interface Connection {
+    /**
+     * A constant indicating that transactions are not supported.A constant indicating that transactions are not supported.
+     */
+    static final int TRANSACTION_NONE = 0;
+
+    boolean isValid(int timeout);
+
+    boolean isClosed();
+
+    Statement createStatement();
+
+    void commit();
+
+    void rollback();
+
+    void close();
+
+}
+```
+
+---
+
+```java
+class MysqlConnection implements Connection {
+
+    @Override
+    public boolean isValid(int timeout) {
+        return true;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
+    @Override
+    public Statement createStatement() {
+        return null;
+    }
+
+    @Override
+    public void commit() {
+        System.out.println("Delete all the data");
+    }
+
+    @Override
+    public void rollback() {
+        System.out.println("Something bad");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Bye, Bye");
+    }
+}
+```
+
+---
+
+```java
+interface Iterator {
+}
+
+interface Iterable {
+    void forEach();
+
+    Iterator iterator();
+}
+```
+
+. . .
+
+```java
+interface Collection {
+    boolean add(Object o);
+
+    void clear();
+
+    boolean contains(Object o);
+
+    boolean isEmpty();
+
+    boolean remove(Object o);
+
+}
+```
+
+. . .
+
+```java
+interface List {
+    void add(int index, Object o);
+
+    Object get(int index);
+
+    int indexOf(Object o);
+}
+```
+
+---
+
+```java
+
+```
+
+## enum
+
+```java
+// Status.java
+
+public enum Status {
+    OK(200),
+    FORBIDDEN(403),
+    NOT_FOUND(404);
+
+    private int code;
+
+    Status(int i) {
+        this.code = i;
+    }
+
+    boolean isStatusGood() {
+        return this.code < 400;
+    }
+
+    boolean isStatusBad() {
+        return !isStatusGood();
+    }
+}
+```
+
+---
+
+```java
+// Main.java
+
+class Main {
+    public static void main(String[] args) {
+        var response = Status.OK;
+
+        if (response.isStatusBad()) {
+            System.out.println("I have a baaad feeling about this!");
+        } else {
+            System.out.println("everything seems OK");
+        }
+    }
+}
+```
+
+---
+
+## record
+
+Más nyelvekben (ha van), akkor `dataclass`-nak is hívják.
+
+```java
+// Employee.java
+
+public record Employee(int id, int income, double taxModifier) {
+    public double calculatePay() {
+        return income * taxModifier;
+    }
+}
+```
+
+. . .
+
+```java
+// Main.java
+
+class Main {
+    public static void main(String[] args) {
+        Employee max = new Employee(0, 25000, 0.95);
+        System.out.printf("id: %s pays %s", max.id(), max.calculatePay());
+    }
+}
+```
+
+---
+
+A `record` osztályok:
+
+- minden mező `private final`
+- minden mezőnek van getter metódusa (`.fieldName()`)
+- publikus konstruktor, minden mezőt bekérünk argomentumként
+- alapértelmezetten `.equals()` metódus
+- alapértelmezetten `.hashCode()` metódus
+- alapértelmezetten `.toString()` metódus
+- változtathatatlan/állandó (**immutable**) adattípus
+
+---
