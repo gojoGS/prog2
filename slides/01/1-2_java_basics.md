@@ -1,5 +1,5 @@
 ---
-title: Java alapok
+title: "Lesson 01.2: Java alapok"
 ...
 
 
