@@ -210,7 +210,7 @@ A wildcard egy típust jelöl, ami vagy `Integer`, vagy integer valamely szülő
 
 ---
 
-## multiple, bound
+## multiple bound
 
 ```java
 class AbstractCollection{}
@@ -220,3 +220,17 @@ public class Foo <T extends AbstractCollection & Comparable>{
     T comparableCollection;
 }
 ```
+
+---
+
+- Abstract code expresses an idea but not how to make it work
+- Generic code works with more than one kind of object, and knows what kind you gave it
+
+. . .
+
+- Abstract specifies an interface, without the full implementation
+- Generic code includes Type info, and may work with multiple types
+
+. . .
+
+Bővebben: https://stackoverflow.com/a/1220353
